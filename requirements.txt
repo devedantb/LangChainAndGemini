@@ -1,0 +1,14 @@
+langchain==0.1.12
+ipython==8.22.2
+langchain-google-genai==0.0.9
+chromadb==0.4.24
+flask==3.0.2
+bs4==0.0.2
+python-dotenv==1.0.1
+playwright==1.42.0
+pypdf==4.1.0
+PyPDF2==3.0.1
+python-multipart==0.0.9
+pymongo[srv]==4.6.2
+itsdangerous==2.1.2
+Jinja2==3.1.3

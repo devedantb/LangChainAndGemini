@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upload.css') }}">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/upload">Upload PDF</a></li>
+            <li><a href="/getanswer">PDF chat</a></li>
+            <li><a href="/logout">logout</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Upload File</h2>
+        <div id="drop-area">
+            <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
+                <div class="form-group">
+                    <label for="file" id="file-label">Select File:</label>
+                    <input type="file" id="file" name="file" accept=".pdf" style="display: none;" required
+                        onchange="showFileName(this)">
+                    <p>Or drag and drop a file here</p>
+                </div>
+                <div class="form-group">
+                    <span id="file-name"></span><br>
+                    <button class="upload-button" type="button" onclick="document.getElementById('file').click()">Choose File</button>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var dropArea = document.getElementById('drop-area');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false)
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropArea.classList.add('highlight');
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('highlight');
+        }
+
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            var dt = e.dataTransfer;
+            var files = dt.files;
+
+            document.getElementById('file').files = files;
+            updateFileName(files[0]);
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            var file = files[0];
+            // Display file name or do whatever you want with the dropped file
+            console.log('File dropped:', file.name);
+        }
+
+        function showFileName(input) {
+            var fileNameElement = document.getElementById('file-name');
+            var fileName = input.files[0].name;
+            fileNameElement.textContent = fileName;
+        }
+    </script>
+</body>
+
+</html>

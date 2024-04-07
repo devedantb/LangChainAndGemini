@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/upload">Upload PDF</a></li>
+            <li><a href="/getanswer">PDF chat</a></li>
+            <li><a href="/logout">logout</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Welcome {% if 'username' in data %} {{ data['username'] }} {% endif %}</h2>
+        {%if pdf_list%}
+        <h3>Available PDFs</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PDF Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pdf in pdf_list %}
+                <tr>
+                    <td>{{ pdf }}</td>
+                    <td>
+                        <a href="/upload">Update</a>
+                        <a href="/delete/{{pdf}}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {%else%}
+            <h2>There are no PDFs available <a href="/upload">click here to upload</a></h2>
+        {%endif%}
+    </div>
+</body>
+
+</html>

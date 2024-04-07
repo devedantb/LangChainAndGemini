@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question and Answer Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='getans.css') }}">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/upload">Upload PDF</a></li>
+            <li><a href="/getanswer">PDF chat</a></li>
+            <li><a href="/logout">logout</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <!-- Left side -->
+        {%if pdf_list%}
+        <form method="post" class="left-side">
+            <h2>Ask Questions</h2>
+            <div class="form-group">
+                <label for="question">Question:</label>
+                <input type="text" id="question" name="prompt" required>
+            </div>
+            <div class="form-group">
+                <label for="pdf">Select PDF:</label>
+                <select id="pdf" name="pdf_name" required>
+                {%if pdf_name%}
+                    <option value="{{pdf_name}}">{{pdf_name}}</option>
+                {%else%}
+                <option value="">Please select</option>
+                {%for pdf in pdf_list%}
+                    <option value="{{pdf}}">{{pdf}}</option>
+                {% endfor %}
+                {%endif%}
+                </select>
+                <br>
+                {%if pdf_name%}
+                    click <a href="/getanswer">here</a> to select another pdf
+                {%endif%}
+                
+            </div>
+            <button type="submit">Submit Question</button>
+        </form>
+        
+        <!-- Right side -->
+        <div class="right-side">
+            <h2>Answers</h2>
+            <div id="answers">
+                {{answer}}
+            </div>
+        </div>
+        {%else%}
+        <h2>There are no PDFs available <a href="/upload">click here to upload</a></h2>
+        {%endif%}
+    </div>
+
+</body>
+
+</html>
