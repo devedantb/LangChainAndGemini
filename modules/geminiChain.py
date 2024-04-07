@@ -45,6 +45,7 @@ def GetDataFromPDFandAnswer(
             model, retriever=vector_index, return_source_documents=True
         )
         result = qa_chain({"query": prompt})
-        return result["result"]
+        answer = result["result"]
+        return answer
     except:
         return f"{pdf_name} is not a valid pdf"

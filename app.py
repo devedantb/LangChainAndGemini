@@ -183,12 +183,7 @@ def get_ans_from_pdf():
                 answer = GetDataFromPDFandAnswer(
                     pdf_name, prompt, pdf_data
                 )  # Assuming this function returns a result
-
-                if isinstance(answer, str):
-                    result_value = answer
-                else:
-                    result_value = answer.get("result")
-
+                result_value = answer
                 getUser = db.users.find_one({"username": username})
                 getUser.pop("password", None)
 
