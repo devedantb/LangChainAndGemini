@@ -205,3 +205,6 @@ def get_ans_from_pdf():
             data=getUser,
             pdf_list=getUser.get("pdf", []),
         )
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=8000)
