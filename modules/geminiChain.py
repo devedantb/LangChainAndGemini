@@ -35,16 +35,20 @@ def GetDataFromPDFandAnswer(
 ):  ##pdf_path,
     try:
         texts = pdf_data
+        print(texts)
         embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001", google_api_key=GOOGLE_API_KEY
         )
+        print(GOOGLE_API_KEY)
         vector_index = Chroma.from_texts(texts, embeddings).as_retriever(
             search_kwargs={"k": 5}
         )
         qa_chain = RetrievalQA.from_chain_type(
             model, retriever=vector_index, return_source_documents=True
         )
-        result = qa_chain({"query": prompt})
+
+        result = qa_chain.invoke({"query": prompt})
+        print(result)
         answer = result["result"]
         return answer
     except:
