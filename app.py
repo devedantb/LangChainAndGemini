@@ -10,9 +10,17 @@ from flask import Flask, redirect, render_template, request, session, jsonify
 from werkzeug.utils import secure_filename
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from urllib.parse import quote_plus
+
+username = quote_plus('<username>')
+password = quote_plus('<password>')
 
 load_dotenv()
-MONGO_URI = os.getenv("MONGO_URI")
+# MONGO_URI = os.getenv("MONGO_URI")
+mongo_password = quote_plus(os.getenv("mongo_password"))
+mongo_username = quote_plus(os.getenv("mongo_username"))
+## modify your URI by refering >> https://www.mongodb.com/docs/atlas/troubleshoot-connection/
+MONGO_URI = f"mongodb+srv://{mongo_username}:{mongo_password}@cluster0.8ftxc77.mongodb.net/"
 client = MongoClient(MONGO_URI)
 db = client.langchain
 
